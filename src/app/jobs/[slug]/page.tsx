@@ -6,7 +6,7 @@ import type { Document, Block, Inline, Text } from '@contentful/rich-text-types'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { getJobBySlug, getJobSlugs, getRevalidate } from '@/lib/contentful'
 
-export const revalidate = getRevalidate()
+export const revalidate = 60
 
 const LF = String.fromCharCode(10)
 const CR = String.fromCharCode(13)
