@@ -1,0 +1,75 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root { color-scheme: light; }
+.btn { @apply inline-flex items-center justify-center rounded-full border border-black px-4 py-2 transition-all; }
+.btn-solid { @apply bg-black text-white hover:-translate-y-0.5 shadow-lift; }
+.btn-ghost { @apply bg-white text-black hover:-translate-y-0.5; }
+.container { @apply max-w-[1200px] mx-auto px-5; }
+.section { @apply py-12; }
+.panel { @apply border border-border rounded-xl bg-white p-4 transition-all hover:-translate-y-0.5 hover:shadow-lift; }
+.eyebrow { @apply inline-block text-[12px] uppercase tracking-[0.14em] px-2 py-1 border border-black rounded-full; }
+.pill { @apply border border-border rounded-full px-2.5 py-1 text-sm text-neutral-600; }
+.meta { @apply text-sm text-neutral-600; }
+.header { @apply sticky top-0 z-40 bg-white/85 backdrop-blur border-b border-border; }
+.nav { @apply grid grid-cols-[1fr_auto_1fr] items-center h-16 gap-3; }
+.brand { @apply font-extrabold tracking-tight; }
+.job-row { @apply grid grid-cols-[1fr_auto] items-center border border-border rounded-xl p-4 bg-white transition-all hover:shadow-lift hover:-translate-y-0.5; }
+.badge { @apply border border-border rounded-full px-2 py-1 text-xs text-neutral-700; }
+.prose p,
+.prose li { white-space: pre-line; /* respect single as line break */}
+layer utilities {
+  .prose p.rtp { white-space: pre-line !important; margin-bottom: 200px;}
+  .prose ul.rtul { list-style: disc; padding-left: 1.25rem; margin: .5rem 0; }
+  .prose ul.rtul li { margin: .25rem 0; }
+}
+@layer utilities {
+  /* ruimte onder elke Rich Text paragraaf */
+  .prose p.rtp {
+    margin-bottom: 1.25rem; /* ~20px */
+  }
+
+  /* geen dubbele ruimte wanneer er een lijst volgt */
+  .prose p.rtp:has(+ ul),
+  .prose p.rtp:has(+ ol) {
+    margin-bottom: 0.75rem;
+  }
+
+  /* laatste paragraaf in het blok zonder extra ruimte */
+  .prose p.rtp:last-child {
+    margin-bottom: 0;
+  }
+}
+
+@layer utilities {
+  /* Alinea's uit Rich Text */
+  .prose p.rtp {
+    margin-bottom: 1.25rem; /* ~20px */
+  }
+
+  /* Lijsten die we zelf renderen uit Rich Text */
+  .prose ul.rtul,
+  .prose ol.rtul {
+    margin: 0 0 1.25rem;      /* onderruimte zoals p */
+    padding-left: 1.25rem;     /* inspringing */
+    list-style: disc;          /* bullets (ol kun je 'decimal' geven) */
+  }
+
+  /* Compactere overgang p -> lijst (voorkomt dubbel witruimte) */
+  .prose p.rtp + ul.rtul,
+  .prose p.rtp + ol.rtul {
+    margin-top: 0.5rem;
+  }
+
+  /* Kleine verticale spacing tussen list items */
+  .prose ul.rtul li + li,
+  .prose ol.rtul li + li {
+    margin-top: 0.25rem;
+  }
+
+  /* Laatste element in het blok geen extra ruimte geven */
+  .prose :where(p.rtp, ul.rtul, ol.rtul):last-child {
+    margin-bottom: 0;
+  }
+}
