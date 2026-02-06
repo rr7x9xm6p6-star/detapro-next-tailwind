@@ -1,13 +1,19 @@
 
 import { getRoles } from '@/lib/contentful'
+import SectionHeading from '@/components/SectionHeading'
+
 
 export default async function Roles(){
   const roles = await getRoles(6)
   return (
     <section className="container section">
-      <div className="flex items-end justify-between mb-4">
-        <h2 className="text-2xl font-semibold">Open rollen</h2>
-        <p className="text-neutral-600 max-w-2xl">Niet exact jouw match? Zet jezelf op de radar — we hebben ook stille opdrachten.</p>
+      <div className="mb-8">
+         <SectionHeading
+          title="Open rollen"
+          subtitle="Niet exact jouw match? Zet jezelf op de radar — we hebben ook stille opdrachten."
+          className="mb-6"
+        />
+      
       </div>
 
       <div className="grid md:grid-cols-2 gap-3">

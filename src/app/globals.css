@@ -7,7 +7,7 @@
 .btn-solid { @apply bg-black text-white hover:-translate-y-0.5 shadow-lift; }
 .btn-ghost { @apply bg-white text-black hover:-translate-y-0.5; }
 .container { @apply max-w-[1200px] mx-auto px-5; }
-.section { @apply py-12; }
+.section { @apply w-full py-12 md:py-16 space-y-8; }
 .panel { @apply border border-border rounded-xl bg-white p-4 transition-all hover:-translate-y-0.5 hover:shadow-lift; }
 .eyebrow { @apply inline-block text-[12px] uppercase tracking-[0.14em] px-2 py-1 border border-black rounded-full; }
 .pill { @apply border border-border rounded-full px-2.5 py-1 text-sm text-neutral-600; }
