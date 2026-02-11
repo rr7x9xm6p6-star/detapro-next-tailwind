@@ -52,7 +52,7 @@ export default function ContactPage() {
           <div className="panel">
             <h3 className="text-xl font-semibold mb-2">Beschikbaar voor</h3>
             <p className="text-neutral-700 leading-relaxed">
-              Professionals · Opdrachtgevers · Partnerships
+              Talent, teams en iedereen die vooruit wil. 
             </p>
           </div>
 

@@ -11,7 +11,8 @@ export default function Process(){
         />
       </div>
       <div className="grid gap-3">
-        {[['Stuur je CV','Na het  versturen van je CV, zullen we deze zorgvuldig beoordelen. Pro Tip: Vermeld in je sollicitatie je motivatie om bij ons te komen werken en wat je denkt dat je voor Detapro kunt betekenen.'], ['Telefonische kennismaking','Korte call over je ervaring, voorkeuren en doelen. Wij vertellen je natuurlijk ook graag over wie wij zijn en wat wij voor jou kunnen betekenen.'], ['Match & voorstel','Tijdens een zakenlunch stemmen we elkaars wensen verder af en zullen we direct uitspreken of we een voorstel kunnen doen.'], ['Contract en Start','Wanneer de inkt opgedroogd is starten we jouw onboarding, daarna periodieke check‑ins.']].map((s,i)=> (
+        {[['Laat van je horen','Stuur ons je CV en vertel meteen waarom je met óns wilt werken. Wat drijft je? En minstens zo belangrijk: wat denk jij dat jij bij Detapro kunt toevoegen? We lezen alles met aandacht.'], ['Persoonlijke kennismaking','We plannen een korte, informele call. Jij vertelt over je ervaring, ambities en voorkeuren, wij nemen je mee in wie we zijn, waar we voor staan en hoe wij jou kunnen helpen groeien.'], ['Match & voorstel','Tijdens een goede zakenlunch verdiepen we de klik. We bespreken verwachtingen, scherpen wensen aan en zijn direct eerlijk: is dit een match, dan doen we je een concreet voorstel.'], ['Contract & kick-off','Handtekeningen gezet? Dan gaan we los. We zorgen voor een soepele onboarding en blijven betrokken met regelmatige check-ins, zodat jij het beste uit jezelf haalt.']].map((s,i)=> (
+
           <div key={i} className="panel">
             <div className="flex items-start gap-3"><span className="pill">{String(i+1).padStart(2,'0')}</span><div><strong>{s[0]}</strong><p className="meta">{s[1]}</p></div></div>
           </div>

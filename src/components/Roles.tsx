@@ -10,7 +10,7 @@ export default async function Roles(){
       <div className="mb-8">
          <SectionHeading
           title="Open rollen"
-          subtitle="Niet exact jouw match? Zet jezelf op de radar — we hebben ook stille opdrachten."
+          subtitle="Niet exact jouw match? Zet jezelf op de radar!"
           className="mb-6"
         />
       
