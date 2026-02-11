@@ -73,22 +73,22 @@ export default function AboutPage() {
       </section>
       */}
 
-      {/* TEAM & OFFICE */}
+      {/* OFFICE & TEAM */}
 <section className="container section border-t border-b border-border">
   <div className="grid md:grid-cols-2 gap-6">
+
+        {/* Office foto */}
+    <figure className="border border-gray-200 rounded-xl overflow-hidden">
+      <div className="relative aspect-square md:aspect-[4/3] w-full">
+        <img src="/about/office_detapro.png" alt="detapro office" className="object-cover w-full h-full" />
+      </div>
+    </figure>
 
     {/* Team foto */}
     <figure className="border border-gray-200 rounded-xl overflow-hidden">
       {/* vaste verhouding → gelijke hoogte */}
       <div className="relative aspect-square md:aspect-[4/3] w-full">
         <img src="/about/team_detapro.png" alt="detapro team" className="object-cover w-full h-full" />
-      </div>
-    </figure>
-
-    {/* Office foto */}
-    <figure className="border border-gray-200 rounded-xl overflow-hidden">
-      <div className="relative aspect-square md:aspect-[4/3] w-full">
-        <img src="/about/office_detapro.png" alt="detapro office" className="object-cover w-full h-full" />
       </div>
     </figure>
 
