@@ -98,11 +98,8 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="container section">
         <div className="panel">
-          <h3 className="text-2xl font-bold mb-2">Samenwerken?</h3>
-          <p className="text-neutral-700 mb-4">
-            Ben je professional of opdrachtgever en wil je kennismaken? Stuur ons een bericht — we reageren
-            binnen één werkdag.
-          </p>
+       <h3 className="text-xl font-semibold mb-2">Klaar voor je volgende stap?</h3>
+        <p className="meta mb-3">Stuur je CV, GitHub of LinkedIn profiel. We reageren binnen één werkdag.</p>
           <a href="mailto:info@detapro.nl" className="btn btn-solid">Mail detapro</a>
         </div>
       </section>
