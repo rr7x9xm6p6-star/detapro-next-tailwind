@@ -59,7 +59,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* WAARDEN VISUAL */}
+      {/* WAARDEN VISUAL 
       <section className="container py-6">
         <div className="border border-gray-200 rounded-xl overflow-hidden">
           <Image
@@ -71,31 +71,29 @@ export default function AboutPage() {
           />
         </div>
       </section>
+      */}
 
       {/* TEAM & OFFICE */}
-      <section className="container section border-t border-b border-border">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="border border-gray-200 rounded-xl overflow-hidden">
-            <Image
-              src="/about/team_detapro.png"
-              alt="Ons team"
-              width={1400}
-              height={800}
-              className="w-full"
-            />
-          </div>
+<section className="container section border-t border-b border-border">
+  <div className="grid md:grid-cols-2 gap-6">
 
-          <div className="border border-gray-200 rounded-xl overflow-hidden">
-            <Image
-              src="/about/office_detapro.png"
-              alt="Opdrachtgevers & werken bij"
-              width={1400}
-              height={800}
-              className="w-full"
-            />
-          </div>
-        </div>
-      </section>
+    {/* Team foto */}
+    <figure className="border border-gray-200 rounded-xl overflow-hidden">
+      {/* vaste verhouding → gelijke hoogte */}
+      <div className="relative aspect-square md:aspect-[4/3] w-full">
+        <img src="/about/team_detapro.png" alt="detapro team" className="object-cover w-full h-full" />
+      </div>
+    </figure>
+
+    {/* Office foto */}
+    <figure className="border border-gray-200 rounded-xl overflow-hidden">
+      <div className="relative aspect-square md:aspect-[4/3] w-full">
+        <img src="/about/office_detapro.png" alt="detapro office" className="object-cover w-full h-full" />
+      </div>
+    </figure>
+
+  </div>
+</section>
 
       {/* CTA */}
       <section className="container section">
