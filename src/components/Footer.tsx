@@ -9,11 +9,11 @@ export default function Footer(){
       </div>
       <div className="space-y-2 text-right">
         <div className="space-x-2">
-          <a href="#latest-jobs">Laatste vacatures</a>
+          <a href="/#latest-jobs">Laatste vacatures</a>
           <span>·</span>
-          <a href="#proces">Proces</a>
+          <a href="/#proces">Proces</a>
           <span>·</span>
-          <a href="#solliciteer">Solliciteer</a>
+          <a href="/#solliciteer">Solliciteer</a>
         </div>
         <small className="text-neutral-600">© {year} detapro.nl</small>
       </div>

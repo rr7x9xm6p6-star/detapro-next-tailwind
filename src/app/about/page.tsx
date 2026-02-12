@@ -20,7 +20,7 @@ export default function AboutPage() {
 
         <p className="mt-4 text-lg max-w-3xl text-neutral-700">
           Detachering voor Professionals. Wij brengen ervaren specialisten samen
-          met organisaties die vooruit willen — helder, betrokken en resultaatgericht.
+          met organisaties die vooruit willen! Helder, betrokken en resultaatgericht.
         </p>
 
         <div className="mt-8 border border-gray-200 rounded-xl overflow-hidden">
