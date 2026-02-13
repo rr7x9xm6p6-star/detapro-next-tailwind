@@ -14,8 +14,8 @@ export default function Header() {
   const closeMenu = () => setOpen(false)
 
   const menuItems = [
-    { href: '/#latest-jobs', label: 'Latest jobs' },
-    { href: '/#proces', label: 'Proces' },
+    { href: '/#latest-jobs', label: 'Laatste vacatures' },
+    { href: '/#proces', label: 'Sollicitatieproces' },
     { href: '/#faq', label: 'FAQ' },
     { href: '/#solliciteer', label: 'Solliciteer' },
     { href: '/about', label: 'Over ons' },
