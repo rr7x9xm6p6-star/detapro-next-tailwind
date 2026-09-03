@@ -1,37 +1,54 @@
-
-import { getRoles } from '@/lib/contentful'
 import SectionHeading from '@/components/SectionHeading'
+import { haalWerfbareOpdrachten, normaliseerUren, schoneTitel, dedupliceerOpTitel } from '@/lib/werfbareOpdrachten'
 
+// Alleen deze profielcategorieen tonen ("beheer, infrastructuur en cloud")
+// - dit is waar Detapro daadwerkelijk in specialiseert, in plaats van een
+// willekeurige mix van alles wat de marktmonitor scrapet.
+const RELEVANTE_PROFIELEN = [
+  'Cloud / Infrastructure Engineer',
+  'Technisch Applicatiebeheerder',
+  'Functioneel Beheerder',
+]
 
-export default async function Roles(){
-  const roles = await getRoles(6)
+export default async function Roles() {
+  const alleOpdrachten = await haalWerfbareOpdrachten()
+  const gefilterd = alleOpdrachten.filter((o) => o.profiel && RELEVANTE_PROFIELEN.includes(o.profiel))
+  const opdrachten = dedupliceerOpTitel(gefilterd)
+  const getoond = opdrachten.slice(0, 6)
+
   return (
     <section className="container section">
       <div className="mb-8">
-         <SectionHeading
-          title="Open rollen"
-          subtitle="Niet exact jouw match? Zet jezelf op de radar!"
+        <SectionHeading
+          title="Actuele marktvraag"
+          subtitle="Een greep uit de opdrachten die dagelijks via ons netwerk binnenkomen."
           className="mb-6"
         />
-      
       </div>
-
-      <div className="grid md:grid-cols-2 gap-3">
-        {roles.map(r => (
-          <article key={r.id} className="panel">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold">{r.title}</h3>
-              <span className="pill">{r.contract || 'Contract'}</span>
-            </div>
-            <div className="meta mt-1">{r.location} {r.workMode?`• ${r.workMode}`:''}</div>
-            <div className="flex gap-2 mt-3">
-              <a className="btn btn-solid" href="#solliciteer">Solliciteer</a>
-              <a className="btn" href={r.slug?`/jobs/${r.slug}`:'#'}>Bekijk rol</a>
-            </div>
-          </article>
-        ))}
-      </div>
-
+      {getoond.length > 0 ? (
+        <div className="grid md:grid-cols-2 gap-3">
+          {getoond.map((o, i) => (
+            <article key={`${o.bron_url}-${i}`} className="panel">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">{schoneTitel(o.titel)}</h3>
+                <span className="pill" style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '.5rem' }}>
+                  {normaliseerUren(o.uren)}
+                </span>
+              </div>
+              <div className="meta mt-1">{o.locatie || 'locatie onbekend'}</div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        // Nette terugval als de databron (Mac mini) even niet bereikbaar is
+        // of er toevallig niets matcht - een lege sectie na deze kop zou
+        // kapot ogen voor een bezoeker.
+        <div className="panel">
+          <p className="text-neutral-600">
+            Op dit moment geen actuele update beschikbaar. Neem gerust contact op om te horen wat er speelt in jouw vakgebied.
+          </p>
+        </div>
+      )}
       <div className="panel mt-4">
         <strong>Open sollicitatie</strong> — Deel je profiel en voorkeursstack; we pingen je zodra er een match is.
       </div>
