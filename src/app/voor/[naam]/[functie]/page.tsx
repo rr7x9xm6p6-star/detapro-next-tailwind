@@ -80,7 +80,7 @@ export default async function PersoonlijkeLandingspagina({ params }: Props) {
         </p>
       </div>
       <div className="flex gap-2 mb-8">
-        <a className="btn btn-solid" href="/contact">Plan een kennismakingsgesprek</a>
+        <span className="btn btn-solid" aria-disabled="true" style={{ pointerEvents: 'none', opacity: 0.7, cursor: 'default' }}>Plan een kennismakingsgesprek</span>
         <a className="btn" href="/about">Over detapro</a>
       </div>
       <div className="grid md:grid-cols-2 gap-3">
