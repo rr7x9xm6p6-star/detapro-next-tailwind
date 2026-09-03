@@ -11,6 +11,15 @@ type WerfbareOpdracht = {
   profiel: string | null
 }
 
+// Alleen deze profielcategorieen tonen ("beheer, infrastructuur en cloud")
+// - dit is waar Detapro daadwerkelijk in specialiseert, in plaats van een
+// willekeurige mix van alles wat de marktmonitor scrapet.
+const RELEVANTE_PROFIELEN = [
+  'Cloud / Infrastructure Engineer',
+  'Technisch Applicatiebeheerder',
+  'Functioneel Beheerder',
+]
+
 // Zelfde "1 maand opzegtermijn"-uren-normalisatie als de lokale kloon:
 // brondata is inconsistent ("36u p/w", "36 uur per week", losse getallen),
 // dit maakt er overal "N uur" of "N-M uur" van.
@@ -35,7 +44,8 @@ async function haalWerfbareOpdrachten(): Promise<WerfbareOpdracht[]> {
     })
     if (!res.ok) return []
     const data = await res.json()
-    return Array.isArray(data.opdrachten) ? data.opdrachten : []
+    const alle: WerfbareOpdracht[] = Array.isArray(data.opdrachten) ? data.opdrachten : []
+    return alle.filter((o) => o.profiel && RELEVANTE_PROFIELEN.includes(o.profiel))
   } catch {
     // Als de Mac mini even niet bereikbaar is, laat deze sectie gewoon
     // leeg zien in plaats van de hele pagina te breken.
@@ -56,11 +66,6 @@ export default async function Roles() {
           className="mb-6"
         />
       </div>
-      {opdrachten.length > 0 && (
-        <p className="text-sm text-neutral-600 mb-3">
-          <strong className="text-black">{opdrachten.length} werfbare opdrachten</strong> op dit moment via ons netwerk - een doorlopende stroom, geen vaste lijst.
-        </p>
-      )}
       <div className="grid md:grid-cols-2 gap-3">
         {getoond.map((o, i) => (
           <article key={`${o.bron_url}-${i}`} className="panel">
