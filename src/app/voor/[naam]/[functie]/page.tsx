@@ -55,19 +55,27 @@ export default async function PersoonlijkeLandingspagina({ params }: Props) {
         <span className="btn btn-solid" aria-disabled="true" style={{ pointerEvents: 'none', opacity: 0.7, cursor: 'default' }}>Plan een kennismakingsgesprek</span>
         <a className="btn" href="/about">Over detapro</a>
       </div>
-      <div className="grid md:grid-cols-2 gap-3">
-        {getoond.map((o, i) => (
-          <article key={`${o.bron_url}-${i}`} className="panel">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold">{schoneTitel(o.titel)}</h3>
-              <span className="pill" style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '.5rem' }}>
-                {normaliseerUren(o.uren)}
-              </span>
-            </div>
-            <div className="meta mt-1">{o.locatie || 'locatie onbekend'}</div>
-          </article>
-        ))}
-      </div>
+      {getoond.length > 0 ? (
+        <div className="grid md:grid-cols-2 gap-3">
+          {getoond.map((o, i) => (
+            <article key={`${o.bron_url}-${i}`} className="panel">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">{schoneTitel(o.titel)}</h3>
+                <span className="pill" style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '.5rem' }}>
+                  {normaliseerUren(o.uren)}
+                </span>
+              </div>
+              <div className="meta mt-1">{o.locatie || 'locatie onbekend'}</div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        <div className="panel">
+          <p className="text-neutral-600">
+            Op dit moment geen actuele opdrachten beschikbaar om te tonen - neem gerust contact op, dan bespreken we het persoonlijk.
+          </p>
+        </div>
+      )}
     </div>
   )
 }

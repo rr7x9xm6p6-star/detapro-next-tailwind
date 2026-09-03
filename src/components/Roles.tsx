@@ -25,19 +25,30 @@ export default async function Roles() {
           className="mb-6"
         />
       </div>
-      <div className="grid md:grid-cols-2 gap-3">
-        {getoond.map((o, i) => (
-          <article key={`${o.bron_url}-${i}`} className="panel">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold">{schoneTitel(o.titel)}</h3>
-              <span className="pill" style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '.5rem' }}>
-                {normaliseerUren(o.uren)}
-              </span>
-            </div>
-            <div className="meta mt-1">{o.locatie || 'locatie onbekend'}</div>
-          </article>
-        ))}
-      </div>
+      {getoond.length > 0 ? (
+        <div className="grid md:grid-cols-2 gap-3">
+          {getoond.map((o, i) => (
+            <article key={`${o.bron_url}-${i}`} className="panel">
+              <div className="flex items-center justify-between">
+                <h3 className="text-lg font-semibold">{schoneTitel(o.titel)}</h3>
+                <span className="pill" style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '.5rem' }}>
+                  {normaliseerUren(o.uren)}
+                </span>
+              </div>
+              <div className="meta mt-1">{o.locatie || 'locatie onbekend'}</div>
+            </article>
+          ))}
+        </div>
+      ) : (
+        // Nette terugval als de databron (Mac mini) even niet bereikbaar is
+        // of er toevallig niets matcht - een lege sectie na deze kop zou
+        // kapot ogen voor een bezoeker.
+        <div className="panel">
+          <p className="text-neutral-600">
+            Op dit moment geen actuele update beschikbaar. Neem gerust contact op om te horen wat er speelt in jouw vakgebied.
+          </p>
+        </div>
+      )}
       <div className="panel mt-4">
         <strong>Open sollicitatie</strong> — Deel je profiel en voorkeursstack; we pingen je zodra er een match is.
       </div>
