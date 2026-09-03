@@ -1,5 +1,5 @@
 import SectionHeading from '@/components/SectionHeading'
-import { haalWerfbareOpdrachten, normaliseerUren, schoneTitel } from '@/lib/werfbareOpdrachten'
+import { haalWerfbareOpdrachten, normaliseerUren, schoneTitel, dedupliceerOpTitel } from '@/lib/werfbareOpdrachten'
 
 // Alleen deze profielcategorieen tonen ("beheer, infrastructuur en cloud")
 // - dit is waar Detapro daadwerkelijk in specialiseert, in plaats van een
@@ -12,7 +12,8 @@ const RELEVANTE_PROFIELEN = [
 
 export default async function Roles() {
   const alleOpdrachten = await haalWerfbareOpdrachten()
-  const opdrachten = alleOpdrachten.filter((o) => o.profiel && RELEVANTE_PROFIELEN.includes(o.profiel))
+  const gefilterd = alleOpdrachten.filter((o) => o.profiel && RELEVANTE_PROFIELEN.includes(o.profiel))
+  const opdrachten = dedupliceerOpTitel(gefilterd)
   const getoond = opdrachten.slice(0, 6)
 
   return (

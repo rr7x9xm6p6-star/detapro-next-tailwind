@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { haalWerfbareOpdrachten, normaliseerUren, schoneTitel, type WerfbareOpdracht } from '@/lib/werfbareOpdrachten'
+import { haalWerfbareOpdrachten, normaliseerUren, schoneTitel, dedupliceerOpTitel, type WerfbareOpdracht } from '@/lib/werfbareOpdrachten'
 
 function hoofdletterVoornaam(naam: string): string {
   const schoon = decodeURIComponent(naam).trim()
@@ -33,7 +33,8 @@ export default async function PersoonlijkeLandingspagina({ params }: Props) {
   const opdrachten = await haalWerfbareOpdrachten()
   const relevant = opdrachten.filter((o) => matchtFunctie(functieRuw, o))
   const heeftSpecifiekeMatch = relevant.length > 0
-  const getoond = (heeftSpecifiekeMatch ? relevant : opdrachten).slice(0, 4)
+  const gededuped = dedupliceerOpTitel(heeftSpecifiekeMatch ? relevant : opdrachten)
+  const getoond = gededuped.slice(0, 4)
 
   const introRegel = heeftSpecifiekeMatch
     ? `We zien doorlopend vraag naar ${functieWeergave.toLowerCase()}s zoals jij - op dit moment ${relevant.length} opdrachten die daar direct bij aansluiten.`

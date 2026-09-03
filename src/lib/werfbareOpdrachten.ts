@@ -35,6 +35,25 @@ export function normaliseerUren(ruweTekst: string | null): string {
   return ruweTekst
 }
 
+// Dezelfde onderliggende opdracht verschijnt vaak via meerdere bronnen
+// (bv. zowel needstaffing.nl als freelance.nl) - na het opschonen van de
+// titel worden zulke duplicaten pas echt zichtbaar ("Platform Engineer
+// Big Data" twee keer). Ontdubbelt op de OPGESCHOONDE titel (niet de
+// ruwe), houdt de eerste (= qua startdatum eerstvolgende, dankzij de
+// bestaande sortering) aan. Bewust vóór het knippen naar het te tonen
+// aantal toepassen, anders eindig je met minder unieke rollen dan bedoeld.
+export function dedupliceerOpTitel(opdrachten: WerfbareOpdracht[]): WerfbareOpdracht[] {
+  const geziene = new Set<string>()
+  const resultaat: WerfbareOpdracht[] = []
+  for (const o of opdrachten) {
+    const sleutel = schoneTitel(o.titel).toLowerCase()
+    if (geziene.has(sleutel)) continue
+    geziene.add(sleutel)
+    resultaat.push(o)
+  }
+  return resultaat
+}
+
 export async function haalWerfbareOpdrachten(): Promise<WerfbareOpdracht[]> {
   const basisUrl = process.env.MARKTMONITOR_PUBLIEKE_API || 'https://zzpbaas.nl'
   try {
