@@ -1,34 +1,5 @@
 import type { Metadata } from 'next'
-
-type WerfbareOpdracht = {
-  titel: string
-  locatie: string | null
-  uren: string | null
-  bron_url: string
-  profiel: string | null
-}
-
-function normaliseerUren(ruweTekst: string | null): string {
-  if (!ruweTekst) return 'onbekend'
-  const schoon = ruweTekst.trim().toLowerCase()
-  const bereikMatch = schoon.match(/(\d+)\s*-\s*(\d+)/)
-  if (bereikMatch) return `${bereikMatch[1]}-${bereikMatch[2]} uur`
-  const enkelMatch = schoon.match(/(\d+)/)
-  if (enkelMatch) return `${enkelMatch[1]} uur`
-  return ruweTekst
-}
-
-async function haalWerfbareOpdrachten(): Promise<WerfbareOpdracht[]> {
-  const basisUrl = process.env.MARKTMONITOR_PUBLIEKE_API || 'https://zzpbaas.nl'
-  try {
-    const res = await fetch(`${basisUrl}/api/publiek/werfbare-opdrachten`, { next: { revalidate: 300 } })
-    if (!res.ok) return []
-    const data = await res.json()
-    return Array.isArray(data.opdrachten) ? data.opdrachten : []
-  } catch {
-    return []
-  }
-}
+import { haalWerfbareOpdrachten, normaliseerUren, schoneTitel, type WerfbareOpdracht } from '@/lib/werfbareOpdrachten'
 
 function hoofdletterVoornaam(naam: string): string {
   const schoon = decodeURIComponent(naam).trim()
@@ -87,7 +58,7 @@ export default async function PersoonlijkeLandingspagina({ params }: Props) {
         {getoond.map((o, i) => (
           <article key={`${o.bron_url}-${i}`} className="panel">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold">{o.titel}</h3>
+              <h3 className="text-lg font-semibold">{schoneTitel(o.titel)}</h3>
               <span className="pill" style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '.5rem' }}>
                 {normaliseerUren(o.uren)}
               </span>

@@ -1,15 +1,5 @@
 import SectionHeading from '@/components/SectionHeading'
-
-// Type voor een werfbare opdracht uit de IT Marktmonitor - los van het
-// Contentful-gebaseerde Job-type in lib/types.ts, want dit komt uit een
-// heel andere bron (live scraper-data, geen CMS-content).
-type WerfbareOpdracht = {
-  titel: string
-  locatie: string | null
-  uren: string | null
-  bron_url: string
-  profiel: string | null
-}
+import { haalWerfbareOpdrachten, normaliseerUren, schoneTitel } from '@/lib/werfbareOpdrachten'
 
 // Alleen deze profielcategorieen tonen ("beheer, infrastructuur en cloud")
 // - dit is waar Detapro daadwerkelijk in specialiseert, in plaats van een
@@ -20,41 +10,9 @@ const RELEVANTE_PROFIELEN = [
   'Functioneel Beheerder',
 ]
 
-// Zelfde "1 maand opzegtermijn"-uren-normalisatie als de lokale kloon:
-// brondata is inconsistent ("36u p/w", "36 uur per week", losse getallen),
-// dit maakt er overal "N uur" of "N-M uur" van.
-function normaliseerUren(ruweTekst: string | null): string {
-  if (!ruweTekst) return 'onbekend'
-  const schoon = ruweTekst.trim().toLowerCase()
-  const bereikMatch = schoon.match(/(\d+)\s*-\s*(\d+)/)
-  if (bereikMatch) return `${bereikMatch[1]}-${bereikMatch[2]} uur`
-  const enkelMatch = schoon.match(/(\d+)/)
-  if (enkelMatch) return `${enkelMatch[1]} uur`
-  return ruweTekst
-}
-
-async function haalWerfbareOpdrachten(): Promise<WerfbareOpdracht[]> {
-  const basisUrl = process.env.MARKTMONITOR_PUBLIEKE_API || 'https://zzpbaas.nl'
-  try {
-    const res = await fetch(`${basisUrl}/api/publiek/werfbare-opdrachten`, {
-      // Zelfde hergebruik-interval als de rest van de site (zie
-      // REVALIDATE_SECONDS in lib/contentful.ts) - deze marktdata hoeft
-      // niet op elke paginaload vers opgehaald te worden.
-      next: { revalidate: 300 },
-    })
-    if (!res.ok) return []
-    const data = await res.json()
-    const alle: WerfbareOpdracht[] = Array.isArray(data.opdrachten) ? data.opdrachten : []
-    return alle.filter((o) => o.profiel && RELEVANTE_PROFIELEN.includes(o.profiel))
-  } catch {
-    // Als de Mac mini even niet bereikbaar is, laat deze sectie gewoon
-    // leeg zien in plaats van de hele pagina te breken.
-    return []
-  }
-}
-
 export default async function Roles() {
-  const opdrachten = await haalWerfbareOpdrachten()
+  const alleOpdrachten = await haalWerfbareOpdrachten()
+  const opdrachten = alleOpdrachten.filter((o) => o.profiel && RELEVANTE_PROFIELEN.includes(o.profiel))
   const getoond = opdrachten.slice(0, 6)
 
   return (
@@ -70,7 +28,7 @@ export default async function Roles() {
         {getoond.map((o, i) => (
           <article key={`${o.bron_url}-${i}`} className="panel">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold">{o.titel}</h3>
+              <h3 className="text-lg font-semibold">{schoneTitel(o.titel)}</h3>
               <span className="pill" style={{ whiteSpace: 'nowrap', flexShrink: 0, marginLeft: '.5rem' }}>
                 {normaliseerUren(o.uren)}
               </span>
