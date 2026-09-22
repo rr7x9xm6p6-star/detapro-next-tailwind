@@ -6,6 +6,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import type { Document, Block, Inline, Text } from '@contentful/rich-text-types'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { getJobBySlug, getJobSlugs } from '@/lib/contentful'
+import { formatRelativeDate } from '@/lib/date'
 
 export const revalidate = 60
 
@@ -149,7 +150,7 @@ export default async function JobDetail(props: { params: Promise<{ slug: string 
               {job.location && (<li><strong>Locatie:</strong> {job.location}</li>)}
               {job.workMode && (<li><strong>Dienstverband:</strong> {job.workMode}</li>)}
               {job.hoursPerWeek && (<li><strong>Uren:</strong> {job.hoursPerWeek} uur per week</li>)}
-              {job.postedAt && (<li><strong>Publicatie:</strong> {job.postedAt}</li>)}
+              {job.postedAt && (<li><strong>Publicatie:</strong> {formatRelativeDate(job.postedAt)}</li>)}
               {job.startDate && (<li><strong>Startdatum:</strong> {job.startDate}</li>)}
             </ul>
 

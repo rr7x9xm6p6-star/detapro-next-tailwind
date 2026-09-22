@@ -3,6 +3,7 @@
 
 import { useMemo, useState } from 'react';
 import type { Job } from '@/lib/types';
+import { formatRelativeDate } from '@/lib/date';
 
 /** Normaliseer naar lowercase + trim voor case-insensitive vergelijkingen */
 function norm(v?: string) {
@@ -106,7 +107,7 @@ export default function LatestJobsClient({ jobs }: { jobs: Job[] }) {
                 <div className="meta"><a href={`/jobs/${j.slug}`}>
                   {j.location}
                   {j.workMode ? ` • ${j.workMode}` : ''}
-                  {j.postedAt ? ` • Geplaatst: ${j.postedAt}` : ''}</a>
+                  {j.postedAt ? ` • Geplaatst: ${formatRelativeDate(j.postedAt)}` : ''}</a>
                 </div>
               </div>
             </div>
