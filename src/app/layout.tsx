@@ -3,9 +3,15 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/lib/seo'
 
-export const metadata = {
-  title: 'detapro - Detachering voor Professionals',
+const DEFAULT_TITLE = 'detapro - Detachering voor Professionals'
+const DEFAULT_DESCRIPTION = 'Detachering voor IT & Business professionals. Zwart-wit afspraken, engineering-first, senior resultaten.'
+
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: DEFAULT_TITLE,
+  description: DEFAULT_DESCRIPTION,
   icons: {
     icon: [
       { url: '/favicon.ico' },
@@ -17,6 +23,21 @@ export const metadata = {
     ],
   },
   manifest: '/site.webmanifest',
+  openGraph: {
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: 'nl_NL',
+    type: 'website',
+    images: [{ url: DEFAULT_OG_IMAGE, width: 512, height: 512, alt: SITE_NAME }],
+  },
+  twitter: {
+    card: 'summary',
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [DEFAULT_OG_IMAGE],
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }){

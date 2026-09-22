@@ -1,9 +1,23 @@
 
 import type { Metadata } from "next";
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/seo";
+
+const title = "Contact – detapro";
+const description = "Neem contact op met detapro. Detachering voor Professionals.";
 
 export const metadata: Metadata = {
-  title: "Contact – detapro",
-  description: "Neem contact op met detapro. Detachering voor Professionals.",
+  title,
+  description,
+  openGraph: {
+    title,
+    description,
+    url: `${SITE_URL}/contact`,
+    siteName: SITE_NAME,
+    locale: "nl_NL",
+    type: "website",
+    images: [{ url: DEFAULT_OG_IMAGE, width: 512, height: 512, alt: SITE_NAME }],
+  },
+  twitter: { card: "summary", title, description, images: [DEFAULT_OG_IMAGE] },
 };
 
 export default function ContactPage() {

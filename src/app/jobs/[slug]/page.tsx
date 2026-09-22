@@ -7,6 +7,7 @@ import type { Document, Block, Inline, Text } from '@contentful/rich-text-types'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { getJobBySlug, getJobSlugs } from '@/lib/contentful'
 import { formatRelativeDate } from '@/lib/date'
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE, jobShortDescription, buildJobPostingJsonLd } from '@/lib/seo'
 
 export const revalidate = 60
 
@@ -95,7 +96,30 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
   const { slug } = await props.params
   const job = await getJobBySlug(slug)
   if (!job) return {}
-  return { title: `${job.title} — detapro`, description: job.intro || `${job.title} in ${job.location}` }
+
+  const title = `${job.title} — detapro`
+  const description = jobShortDescription(job)
+  const url = `${SITE_URL}/jobs/${job.slug}`
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: SITE_NAME,
+      locale: 'nl_NL',
+      type: 'website',
+      images: [{ url: DEFAULT_OG_IMAGE, width: 512, height: 512, alt: SITE_NAME }],
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+      images: [DEFAULT_OG_IMAGE],
+    },
+  }
 }
 
 export default async function JobDetail(props: { params: Promise<{ slug: string }> }){
@@ -103,8 +127,16 @@ export default async function JobDetail(props: { params: Promise<{ slug: string 
   const job = await getJobBySlug(slug)
   if (!job) return notFound()
 
+  const jobPostingJsonLd = buildJobPostingJsonLd(job)
+
   return (
     <section className="container section">
+      {/* Structured data voor Google for Jobs — onzichtbaar voor bezoekers */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jobPostingJsonLd) }}
+      />
       {/* Header */}
       <div className="flex items-center justify-between gap-4">
         <div>
