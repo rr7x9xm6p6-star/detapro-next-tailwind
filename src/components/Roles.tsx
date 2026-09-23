@@ -49,6 +49,11 @@ export default async function Roles() {
           </p>
         </div>
       )}
+      <div className="mt-4">
+        <a href="https://zzpbaas.nl" target="_blank" rel="noopener noreferrer" className="text-sm font-medium underline underline-offset-2 hover:text-neutral-600">
+          Bekijk alle opdrachten op zzpbaas.nl →
+        </a>
+      </div>
       <div className="panel mt-4">
         <strong>Open sollicitatie</strong> — Deel je profiel en voorkeursstack; we pingen je zodra er een match is.
       </div>
