@@ -46,7 +46,9 @@ function mapJob(it: any): Job {
     body: f.body,
     requirements: f.requirements,
     niceToHave: f.niceToHave,
-    postedAt: f.postedAt,
+    // Handmatig veld 'postedAt' (indien ingevuld) wint; anders de datum waarop de vacature
+    // voor het eerst in Contentful is gepubliceerd (sys.firstPublishedAt), met createdAt als vangnet.
+    postedAt: f.postedAt || it.sys?.firstPublishedAt || it.sys?.createdAt,
     startDate: f.startDate,
     hoursPerWeek: f.hoursPerWeek,
   }
@@ -54,8 +56,10 @@ function mapJob(it: any): Job {
 
 export async function getLatestJobs(limit = 8): Promise<Job[]> {
   const c = client(); if (!c) return []
-  const res = await c.getEntries<VacatureFields>({ content_type: 'vacature', order: ['-fields.postedAt'], limit })
-  return res.items.map(mapJob)
+  // Sorteren gebeurt hier (niet in Contentful) omdat de datum deels uit sys.firstPublishedAt komt.
+  const res = await c.getEntries<VacatureFields>({ content_type: 'vacature', limit: 1000 })
+  const time = (j: Job) => { const t = j.postedAt ? new Date(j.postedAt).getTime() : 0; return isNaN(t) ? 0 : t }
+  return res.items.map(mapJob).sort((a, b) => time(b) - time(a)).slice(0, limit)
 }
 
 export async function getRoles(limit = 6): Promise<Job[]> {
