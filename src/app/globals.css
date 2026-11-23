@@ -17,59 +17,41 @@
 .brand { @apply font-extrabold tracking-tight; }
 .job-row { @apply grid grid-cols-[1fr_auto] items-center border border-border rounded-xl p-4 bg-white transition-all hover:shadow-lift hover:-translate-y-0.5; }
 .badge { @apply border border-border rounded-full px-2 py-1 text-xs text-neutral-700; }
-.prose p,
-.prose li { white-space: pre-line; /* respect single as line break */}
-layer utilities {
-  .prose p.rtp { white-space: pre-line !important; margin-bottom: 200px;}
-  .prose ul.rtul { list-style: disc; padding-left: 1.25rem; margin: .5rem 0; }
-  .prose ul.rtul li { margin: .25rem 0; }
-}
-@layer utilities {
-  /* ruimte onder elke Rich Text paragraaf */
-  .prose p.rtp {
-    margin-bottom: 1.25rem; /* ~20px */
-  }
 
-  /* geen dubbele ruimte wanneer er een lijst volgt */
-  .prose p.rtp:has(+ ul),
-  .prose p.rtp:has(+ ol) {
-    margin-bottom: 0.75rem;
-  }
+/* Opmaak van Rich Text uit Contentful (vacatureteksten).
+   De Tailwind typography-plugin is niet geinstalleerd en Tailwind preflight
+   haalt standaard bullets, kopgroottes en marges weg, dus doen we dat hier zelf. */
+.job-body { line-height: 1.7; color: #262626; }
+.job-body p,
+.job-body li { white-space: pre-line; /* enkele Enter / Shift+Enter blijft een regel-einde */ }
 
-  /* laatste paragraaf in het blok zonder extra ruimte */
-  .prose p.rtp:last-child {
-    margin-bottom: 0;
-  }
-}
+.job-body p.rtp { margin: 0 0 1.25rem; }
+.job-body p.rtp:has(+ ul),
+.job-body p.rtp:has(+ ol) { margin-bottom: 0.5rem; }
 
-@layer utilities {
-  /* Alinea's uit Rich Text */
-  .prose p.rtp {
-    margin-bottom: 1.25rem; /* ~20px */
-  }
+.job-body ul,
+.job-body ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+.job-body ul { list-style: disc; }
+.job-body ol { list-style: decimal; }
+.job-body ul ul { list-style: circle; margin-bottom: 0; }
+.job-body li { margin: 0.25rem 0; padding-left: 0.25rem; }
+.job-body li::marker { color: #525252; }
+/* paragraaf binnen een lijstitem: geen extra witruimte */
+.job-body li > p.rtp { margin: 0; }
+.job-body li > ul,
+.job-body li > ol { margin: 0.25rem 0 0; }
 
-  /* Lijsten die we zelf renderen uit Rich Text */
-  .prose ul.rtul,
-  .prose ol.rtul {
-    margin: 0 0 1.25rem;      /* onderruimte zoals p */
-    padding-left: 1.25rem;     /* inspringing */
-    list-style: disc;          /* bullets (ol kun je 'decimal' geven) */
-  }
+.job-body h1,
+.job-body h2,
+.job-body h3,
+.job-body h4 { font-weight: 700; line-height: 1.25; letter-spacing: -0.01em; color: #111; margin: 2rem 0 0.75rem; }
+.job-body h1 { font-size: 1.875rem; }
+.job-body h2 { font-size: 1.5rem; }
+.job-body h3 { font-size: 1.25rem; }
+.job-body h4 { font-size: 1.125rem; }
+.job-body > :first-child { margin-top: 0; }
+.job-body > :last-child { margin-bottom: 0; }
 
-  /* Compactere overgang p -> lijst (voorkomt dubbel witruimte) */
-  .prose p.rtp + ul.rtul,
-  .prose p.rtp + ol.rtul {
-    margin-top: 0.5rem;
-  }
-
-  /* Kleine verticale spacing tussen list items */
-  .prose ul.rtul li + li,
-  .prose ol.rtul li + li {
-    margin-top: 0.25rem;
-  }
-
-  /* Laatste element in het blok geen extra ruimte geven */
-  .prose :where(p.rtp, ul.rtul, ol.rtul):last-child {
-    margin-bottom: 0;
-  }
-}
+.job-body a { color: #2563eb; text-decoration: underline; }
+.job-body blockquote { border-left: 3px solid #eaeaea; padding-left: 1rem; margin: 0 0 1.25rem; color: #525252; }
+.job-body hr { border: 0; border-top: 1px solid #eaeaea; margin: 2rem 0; }

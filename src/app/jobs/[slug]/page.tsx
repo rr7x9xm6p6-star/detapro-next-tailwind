@@ -156,7 +156,7 @@ export default async function JobDetail(props: { params: Promise<{ slug: string 
         {/* Left: vacancy body + CTA */}
         <div className="space-y-6">
           {job.body && (
-            <article className="prose prose-neutral max-w-none">
+            <article className="job-body max-w-none">
               {documentToReactComponents(job.body as Document, richTextOptions)}
             </article>
           )}
