@@ -3,7 +3,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
-import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from '@/lib/seo'
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT } from '@/lib/seo'
 
 const DEFAULT_TITLE = 'detapro - Detachering voor Professionals'
 const DEFAULT_DESCRIPTION = 'Detachering voor IT & Business professionals. Zwart-wit afspraken, engineering-first, senior resultaten.'
@@ -30,10 +30,10 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: 'nl_NL',
     type: 'website',
-    images: [{ url: DEFAULT_OG_IMAGE, width: 512, height: 512, alt: SITE_NAME }],
+    images: [{ url: DEFAULT_OG_IMAGE, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT, alt: DEFAULT_TITLE }],
   },
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: DEFAULT_TITLE,
     description: DEFAULT_DESCRIPTION,
     images: [DEFAULT_OG_IMAGE],

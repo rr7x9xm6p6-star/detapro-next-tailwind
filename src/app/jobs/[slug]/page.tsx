@@ -7,7 +7,7 @@ import type { Document, Block, Inline, Text } from '@contentful/rich-text-types'
 import { BLOCKS } from '@contentful/rich-text-types'
 import { getJobBySlug, getJobSlugs } from '@/lib/contentful'
 import { formatRelativeDate } from '@/lib/date'
-import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE, jobShortDescription, buildJobPostingJsonLd } from '@/lib/seo'
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT, jobShortDescription, buildJobPostingJsonLd } from '@/lib/seo'
 
 export const revalidate = 60
 
@@ -111,10 +111,10 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
       siteName: SITE_NAME,
       locale: 'nl_NL',
       type: 'website',
-      images: [{ url: DEFAULT_OG_IMAGE, width: 512, height: 512, alt: SITE_NAME }],
+      images: [{ url: DEFAULT_OG_IMAGE, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT, alt: title }],
     },
     twitter: {
-      card: 'summary',
+      card: 'summary_large_image',
       title,
       description,
       images: [DEFAULT_OG_IMAGE],

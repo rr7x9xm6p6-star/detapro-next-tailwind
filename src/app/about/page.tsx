@@ -1,7 +1,7 @@
 
 import type { Metadata } from "next";
 import Image from "next/image";
-import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE } from "@/lib/seo";
+import { SITE_URL, SITE_NAME, DEFAULT_OG_IMAGE, OG_IMAGE_WIDTH, OG_IMAGE_HEIGHT } from "@/lib/seo";
 
 const title = "Over ons – detapro";
 const description = "Detachering voor Professionals. Ontdek wie we zijn en waar we voor staan.";
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     locale: "nl_NL",
     type: "website",
-    images: [{ url: DEFAULT_OG_IMAGE, width: 512, height: 512, alt: SITE_NAME }],
+    images: [{ url: DEFAULT_OG_IMAGE, width: OG_IMAGE_WIDTH, height: OG_IMAGE_HEIGHT, alt: title }],
   },
-  twitter: { card: "summary", title, description, images: [DEFAULT_OG_IMAGE] },
+  twitter: { card: "summary_large_image", title, description, images: [DEFAULT_OG_IMAGE] },
 };
 
 export default function AboutPage() {

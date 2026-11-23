@@ -3,8 +3,10 @@ import { documentToPlainText } from './richtext'
 
 export const SITE_URL = 'https://detapro.nl'
 export const SITE_NAME = 'detapro'
-/** Vierkant logo als fallback OG-afbeelding zolang er geen speciale 1200x630 social-share-afbeelding is. */
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/android-chrome-512x512.png`
+/** Social-share afbeelding (1200x630) voor LinkedIn, WhatsApp, enz. Bestand: public/og-default.png */
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-default.png`
+export const OG_IMAGE_WIDTH = 1200
+export const OG_IMAGE_HEIGHT = 630
 
 /**
  * Zet het vrije-tekst 'contract'-veld uit Contentful om naar een geldige
