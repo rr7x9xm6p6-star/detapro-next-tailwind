@@ -46,9 +46,10 @@ function mapJob(it: any): Job {
     body: f.body,
     requirements: f.requirements,
     niceToHave: f.niceToHave,
-    // Handmatig veld 'postedAt' (indien ingevuld) wint; anders de datum waarop de vacature
-    // voor het eerst in Contentful is gepubliceerd (sys.firstPublishedAt), met createdAt als vangnet.
-    postedAt: f.postedAt || it.sys?.firstPublishedAt || it.sys?.createdAt,
+    // 'Geplaatst' = laatste publicatiemoment in Contentful (sys.publishedAt, vangnet sys.updatedAt).
+    // Elke keer dat een vacature opnieuw gepubliceerd wordt, springt hij dus naar 'Vandaag'.
+    // Het handmatige veld 'postedAt' wordt bewust niet meer gebruikt.
+    postedAt: it.sys?.publishedAt || it.sys?.updatedAt,
     startDate: f.startDate,
     hoursPerWeek: f.hoursPerWeek,
   }
@@ -56,7 +57,7 @@ function mapJob(it: any): Job {
 
 export async function getLatestJobs(limit = 8): Promise<Job[]> {
   const c = client(); if (!c) return []
-  // Sorteren gebeurt hier (niet in Contentful) omdat de datum deels uit sys.firstPublishedAt komt.
+  // Sorteren gebeurt hier (niet in Contentful) omdat de datum uit sys.publishedAt komt.
   const res = await c.getEntries<VacatureFields>({ content_type: 'vacature', limit: 1000 })
   const time = (j: Job) => { const t = j.postedAt ? new Date(j.postedAt).getTime() : 0; return isNaN(t) ? 0 : t }
   return res.items.map(mapJob).sort((a, b) => time(b) - time(a)).slice(0, limit)
